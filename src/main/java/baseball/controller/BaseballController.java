@@ -39,6 +39,7 @@ public class BaseballController {
             baseballModel.nextPlay(Console.readLine());
         } catch (InvalidInputNumberException ex) {
             baseballView.printErrorMessage(ex.getMessage());
+            return;
         }
     }
 }
