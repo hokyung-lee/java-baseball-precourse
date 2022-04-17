@@ -25,23 +25,17 @@ public class BaseballController {
         baseballModel.generateComputerNumber(new RandomStrikeNumberGenerator());
     }
 
-    private void continueGame() {
+    private void continueGame() throws IllegalArgumentException {
         while(gameContinue) {
             getInputAndReturnResult();
         }
     }
 
-    private void getInputAndReturnResult() {
+    private void getInputAndReturnResult() throws IllegalArgumentException {
         baseballView.printInputNumberMessage();
-
-        try {
-            baseballModel.nextPlay(Console.readLine());
-            baseballView.printResultMessage(baseballModel.calculateResult());
-            checkGameEnd();
-        } catch (IllegalArgumentException ex) {
-            baseballView.printErrorMessage(ex.getMessage());
-            return;
-        }
+        baseballModel.nextPlay(Console.readLine());
+        baseballView.printResultMessage(baseballModel.calculateResult());
+        checkGameEnd();
     }
 
     private void checkGameEnd() throws IllegalArgumentException {

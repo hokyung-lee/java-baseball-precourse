@@ -25,6 +25,8 @@ public class BaseballModelCommandLine implements BaseballModel {
             convertInputNumber(inputNumber);
         } catch (NumberFormatException ex) {
             throw new IllegalArgumentException(INPUT_SIZE_INVALID_MESSAGE);
+        } catch (IllegalArgumentException ex) {
+            throw new IllegalArgumentException(ex.getMessage());
         }
     }
 
