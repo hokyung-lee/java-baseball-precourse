@@ -1,16 +1,15 @@
 package baseball.model;
 
 import baseball.domain.StrikeNumber;
-import baseball.exception.InvalidInputNumberException;
 
 public interface BaseballModel {
     StrikeNumber generateComputerNumber(StrikeNumberGenerator strikeNumberGenerator);
 
-    void nextPlay(String inputNumber) throws InvalidInputNumberException;
+    void nextPlay(String inputNumber) throws IllegalArgumentException;
 
     String calculateResult();
 
     boolean isEnd();
 
-    boolean retryGame(String readLine) throws InvalidInputNumberException;
+    boolean retryGame(String readLine) throws IllegalArgumentException;
 }

@@ -2,7 +2,6 @@ package baseball.model;
 
 import baseball.domain.GameResult;
 import baseball.domain.StrikeNumber;
-import baseball.exception.InvalidInputNumberException;
 
 import java.util.LinkedHashSet;
 
@@ -21,13 +20,11 @@ public class BaseballModelCommandLine implements BaseballModel {
     }
 
     @Override
-    public void nextPlay(String inputNumber) throws InvalidInputNumberException {
+    public void nextPlay(String inputNumber) throws IllegalArgumentException {
         try {
             convertInputNumber(inputNumber);
         } catch (NumberFormatException ex) {
-            throw new InvalidInputNumberException(INPUT_SIZE_INVALID_MESSAGE);
-        } catch (IllegalArgumentException ex) {
-            throw new InvalidInputNumberException(ex.getMessage());
+            throw new IllegalArgumentException(INPUT_SIZE_INVALID_MESSAGE);
         }
     }
 
@@ -45,14 +42,14 @@ public class BaseballModelCommandLine implements BaseballModel {
     }
 
     @Override
-    public boolean retryGame(String readLine) throws InvalidInputNumberException {
+    public boolean retryGame(String readLine) throws IllegalArgumentException {
         if (readLine.equals("1")) {
             return true;
         }
         if (readLine.equals("2")) {
             return false;
         }
-        throw new InvalidInputNumberException(RETRY_INVALID_MESSAGE);
+        throw new IllegalArgumentException(RETRY_INVALID_MESSAGE);
     }
 
     private void convertInputNumber(String inputNumber) {

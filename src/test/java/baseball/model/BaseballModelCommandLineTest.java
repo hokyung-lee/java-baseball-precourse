@@ -1,7 +1,6 @@
 package baseball.model;
 
 import baseball.domain.StrikeNumber;
-import baseball.exception.InvalidInputNumberException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +11,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class BaseballModelCommandLineTest {
 
@@ -39,13 +39,13 @@ public class BaseballModelCommandLineTest {
     @ValueSource(strings = {"-315", "553", "x14", "??3", "530"})
     void validateInputNumber(String inputNumber) throws Exception {
         assertThatThrownBy(() -> baseballModel.nextPlay(inputNumber))
-                .isInstanceOf(InvalidInputNumberException.class).hasMessage("입력값은 서로 다른 1~9 사이 3자리 숫자여야 합니다.");
+                .isInstanceOf(IllegalArgumentException.class).hasMessage("입력값은 서로 다른 1~9 사이 3자리 숫자여야 합니다.");
     }
 
     @DisplayName("정답과 입력값을 비교")
     @ParameterizedTest
     @CsvSource(value = {"152:1스트라이크","185:1볼 1스트라이크","245:낫싱","138:3스트라이크"}, delimiter = ':')
-    void matchInputNumber(String input, String expected) throws InvalidInputNumberException {
+    void matchInputNumber(String input, String expected) throws IllegalArgumentException {
         baseballModel.generateComputerNumber(()-> new LinkedHashSet<>(Arrays.asList(1, 3, 8)));
         baseballModel.nextPlay(input);
         String result = baseballModel.calculateResult();
@@ -56,7 +56,7 @@ public class BaseballModelCommandLineTest {
     @DisplayName("게임 종료 여부 확인")
     @ParameterizedTest
     @CsvSource(value = {"138:true","157:false","245:false"}, delimiter = ':')
-    void isEndGame(String input, String expected) throws InvalidInputNumberException {
+    void isEndGame(String input, String expected) throws IllegalArgumentException {
         baseballModel.generateComputerNumber(()-> new LinkedHashSet<>(Arrays.asList(1, 3, 8)));
         baseballModel.nextPlay(input);
         baseballModel.calculateResult();
@@ -66,14 +66,13 @@ public class BaseballModelCommandLineTest {
 
     @DisplayName("게임 종료 후 재시도 여부")
     @ParameterizedTest
-    @CsvSource(value = {"1:false","2:true"}, delimiter = ':')
+    @CsvSource(value = {"1:true","2:false"}, delimiter = ':')
     void retryGame(String inputNumber, String expected) throws Exception {
         baseballModel.generateComputerNumber(()-> new LinkedHashSet<>(Arrays.asList(1, 3, 8)));
         baseballModel.nextPlay("138");
         baseballModel.calculateResult();
-        baseballModel.retryGame(inputNumber);
 
-        assertThat(baseballModel.isEnd()).isEqualTo(Boolean.valueOf(expected));
+        assertThat(baseballModel.retryGame(inputNumber)).isEqualTo(Boolean.valueOf(expected));
     }
 
     @DisplayName("게임 종료 후 비정상적인 재시도 테스트")
@@ -85,6 +84,6 @@ public class BaseballModelCommandLineTest {
         baseballModel.calculateResult();
 
         assertThatThrownBy(() -> baseballModel.retryGame(inputNumber))
-                .isInstanceOf(InvalidInputNumberException.class).hasMessage("1 또는 2 외의 숫자를 입력하여 게임을 종료합니다.");
+                .isInstanceOf(IllegalArgumentException.class).hasMessage("1 또는 2 외의 숫자를 입력하여 게임을 종료합니다.");
     }
 }

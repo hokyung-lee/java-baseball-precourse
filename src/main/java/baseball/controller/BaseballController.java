@@ -1,7 +1,5 @@
 package baseball.controller;
 
-import baseball.domain.StrikeNumber;
-import baseball.exception.InvalidInputNumberException;
 import baseball.model.BaseballModel;
 import baseball.model.RandomStrikeNumberGenerator;
 import baseball.view.BaseballView;
@@ -40,20 +38,20 @@ public class BaseballController {
             baseballModel.nextPlay(Console.readLine());
             baseballView.printResultMessage(baseballModel.calculateResult());
             checkGameEnd();
-        } catch (InvalidInputNumberException ex) {
+        } catch (IllegalArgumentException ex) {
             baseballView.printErrorMessage(ex.getMessage());
             return;
         }
     }
 
-    private void checkGameEnd() throws InvalidInputNumberException {
+    private void checkGameEnd() throws IllegalArgumentException {
         if(baseballModel.isEnd()) {
             baseballView.printGameEnd();
             askRetryGame();
         }
     }
 
-    private void askRetryGame() throws InvalidInputNumberException {
+    private void askRetryGame() throws IllegalArgumentException {
         baseballView.printRetryGame();
         gameContinue = baseballModel.retryGame(Console.readLine());
 
