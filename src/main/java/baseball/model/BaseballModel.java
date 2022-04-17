@@ -12,5 +12,5 @@ public interface BaseballModel {
 
     boolean isEnd();
 
-    void retryGame(String readLine) throws InvalidInputNumberException;
+    boolean retryGame(String readLine) throws InvalidInputNumberException;
 }

@@ -45,14 +45,12 @@ public class BaseballModelCommandLine implements BaseballModel {
     }
 
     @Override
-    public void retryGame(String readLine) throws InvalidInputNumberException {
+    public boolean retryGame(String readLine) throws InvalidInputNumberException {
         if (readLine.equals("1")) {
-            isEnd = false;
-            return;
+            return true;
         }
         if (readLine.equals("2")) {
-            isEnd = true;
-            return;
+            return false;
         }
         throw new InvalidInputNumberException(RETRY_INVALID_MESSAGE);
     }

@@ -28,9 +28,9 @@ public class BaseballController {
     }
 
     private void continueGame() {
-        do {
+        while(gameContinue) {
             getInputAndReturnResult();
-        } while (gameContinue);
+        }
     }
 
     private void getInputAndReturnResult() {
@@ -55,7 +55,10 @@ public class BaseballController {
 
     private void askRetryGame() throws InvalidInputNumberException {
         baseballView.printRetryGame();
-        baseballModel.retryGame(Console.readLine());
-        gameContinue = !baseballModel.isEnd();
+        gameContinue = baseballModel.retryGame(Console.readLine());
+
+        if (gameContinue) {
+            init();
+        }
     }
 }
