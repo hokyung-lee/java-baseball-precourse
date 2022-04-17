@@ -11,11 +11,6 @@ public class BaseballViewCommandLine implements BaseballView {
     }
 
     @Override
-    public void printErrorMessage(String errorMessage) {
-        System.out.println(errorMessage);
-    }
-
-    @Override
     public void printResultMessage(String resultMessage) {
         System.out.println(resultMessage);
     }

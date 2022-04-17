@@ -1,7 +1,5 @@
 package baseball.domain;
 
-import camp.nextstep.edu.missionutils.Randoms;
-
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
