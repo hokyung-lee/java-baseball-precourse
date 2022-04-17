@@ -7,4 +7,10 @@ public interface BaseballModel {
     StrikeNumber generateComputerNumber(StrikeNumberGenerator strikeNumberGenerator);
 
     void nextPlay(String inputNumber) throws InvalidInputNumberException;
+
+    String calculateResult();
+
+    boolean isEnd();
+
+    void retryGame(String readLine) throws InvalidInputNumberException;
 }

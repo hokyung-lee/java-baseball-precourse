@@ -11,6 +11,7 @@ public class BaseballController {
 
     private final BaseballView baseballView;
     private final BaseballModel baseballModel;
+    private boolean gameContinue = true;
 
     public BaseballController(BaseballView baseballView, BaseballModel baseballModel) {
         this.baseballView = baseballView;
@@ -29,7 +30,7 @@ public class BaseballController {
     private void continueGame() {
         do {
             getInputAndReturnResult();
-        } while (true);
+        } while (gameContinue);
     }
 
     private void getInputAndReturnResult() {
@@ -37,9 +38,24 @@ public class BaseballController {
 
         try {
             baseballModel.nextPlay(Console.readLine());
+            baseballView.printResultMessage(baseballModel.calculateResult());
+            checkGameEnd();
         } catch (InvalidInputNumberException ex) {
             baseballView.printErrorMessage(ex.getMessage());
             return;
         }
+    }
+
+    private void checkGameEnd() throws InvalidInputNumberException {
+        if(baseballModel.isEnd()) {
+            baseballView.printGameEnd();
+            askRetryGame();
+        }
+    }
+
+    private void askRetryGame() throws InvalidInputNumberException {
+        baseballView.printRetryGame();
+        baseballModel.retryGame(Console.readLine());
+        gameContinue = !baseballModel.isEnd();
     }
 }
