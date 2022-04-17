@@ -27,7 +27,7 @@ public class BaseballViewCommandLine implements BaseballView {
 
     @Override
     public void printRetryGame() {
-        System.out.println(GAME_END_MESSAGE);
+        System.out.println(GAME_RETRY_MESSAGE);
     }
 
 }
