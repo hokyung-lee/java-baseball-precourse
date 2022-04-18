@@ -8,6 +8,10 @@ import java.util.LinkedHashSet;
 public class BaseballModelCommandLine implements BaseballModel {
     private static final String  INPUT_SIZE_INVALID_MESSAGE = "입력값은 서로 다른 1~9 사이 3자리 숫자여야 합니다.";
     private static final String RETRY_INVALID_MESSAGE = "1 또는 2 외의 숫자를 입력하여 게임을 종료합니다.";
+    private static final String RETRY_GAME_NUMBER = "1";
+    private static final String END_GAME_NUMBER = "2";
+    private static final String ZERO_NUMBER = "0";
+    private static final int NUMBER_SIZE = 3;
 
     private StrikeNumber strikeNumber;
     private StrikeNumber clientNumber;
@@ -45,10 +49,10 @@ public class BaseballModelCommandLine implements BaseballModel {
 
     @Override
     public boolean retryGame(String readLine) throws IllegalArgumentException {
-        if (readLine.equals("1")) {
+        if (readLine.equals(RETRY_GAME_NUMBER)) {
             return true;
         }
-        if (readLine.equals("2")) {
+        if (readLine.equals(END_GAME_NUMBER)) {
             return false;
         }
         throw new IllegalArgumentException(RETRY_INVALID_MESSAGE);
@@ -57,14 +61,14 @@ public class BaseballModelCommandLine implements BaseballModel {
     private void convertInputNumber(String inputNumber) {
         LinkedHashSet<Integer> inputNumbers = new LinkedHashSet<>();
 
-        if (inputNumber.length() != 3) throw new IllegalArgumentException(INPUT_SIZE_INVALID_MESSAGE);
-        if (inputNumber.contains("0")) throw new IllegalArgumentException(INPUT_SIZE_INVALID_MESSAGE);
+        if (inputNumber.length() != NUMBER_SIZE) throw new IllegalArgumentException(INPUT_SIZE_INVALID_MESSAGE);
+        if (inputNumber.contains(ZERO_NUMBER)) throw new IllegalArgumentException(INPUT_SIZE_INVALID_MESSAGE);
 
         for (Character num : inputNumber.toCharArray()) {
             inputNumbers.add(Integer.parseInt(String.valueOf(num)));
         }
 
-        if (inputNumbers.size() != 3) throw new IllegalArgumentException(INPUT_SIZE_INVALID_MESSAGE);
+        if (inputNumbers.size() != NUMBER_SIZE) throw new IllegalArgumentException(INPUT_SIZE_INVALID_MESSAGE);
 
         this.clientNumber = new StrikeNumber(inputNumbers);
     }

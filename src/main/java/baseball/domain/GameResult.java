@@ -6,6 +6,8 @@ public class GameResult {
     private final static String BALL_TEXT = "볼";
     private final static String NOTHING_TEXT = "낫싱";
     private final static String EMPTY_TEXT = " ";
+    private final static int ZERO = 0;
+    private final static int ADD_ONE = 1;
 
     private int strike = 0;
     private int ball = 0;
@@ -19,16 +21,16 @@ public class GameResult {
 
     public String generateResultMessage() {
         StringBuffer sb = new StringBuffer();
-        if (ball == 0 && strike ==0) {
+        if (ball == ZERO && strike == ZERO) {
             sb.append(NOTHING_TEXT);
             return sb.toString();
         }
-        if (ball > 0) {
+        if (ball > ZERO) {
             sb.append(ball);
             sb.append(BALL_TEXT);
             sb.append(EMPTY_TEXT);
         }
-        if (strike > 0) {
+        if (strike > ZERO) {
             sb.append(strike);
             sb.append(STRIKE_TEXT);
         }
@@ -36,10 +38,10 @@ public class GameResult {
     }
 
     public void addStrike() {
-        this.strike = strike + 1;
+        this.strike = strike + ADD_ONE;
     }
 
     public void addBall() {
-        this.ball = ball + 1;
+        this.ball = ball + ADD_ONE;
     }
 }
